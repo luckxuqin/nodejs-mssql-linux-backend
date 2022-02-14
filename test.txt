@@ -1,2 +1,0 @@
-vcenter_server = 123
-vcenter_user = 456
