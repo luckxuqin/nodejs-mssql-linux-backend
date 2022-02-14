@@ -1,0 +1,24 @@
+vcenter_server = ""
+vcenter_user = ""
+vcenter_password = ""
+vcenter_insecure_ssl = true
+vsphere_datacenter = ""
+vsphere_compute_cluster = ""
+vsphere_folder_vm = "mssql"
+vsphere_resource_pool = "mssql"
+vsphere_distributed_switch = ""
+vsphere_network_1_portgroup = ""
+vsphere_network_1_ipv4_subnet_cidr = ""
+vsphere_network_1_ipv4_ips = ["134"]
+vsphere_network_1_ipv4_gateway = ""
+vsphere_datastore = "vsanDatastore"
+network_domain_name = ""
+network_ipv4_dns_servers = ""
+network_dns_suffix = [""]
+vm_mssql_count = 3
+vm_mssql = { 
+    cpu = 8
+    memory_gb = 32
+    os_disk_gb = 60
+    data_disk_gb = 100
+}
