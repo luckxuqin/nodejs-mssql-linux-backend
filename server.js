@@ -126,7 +126,7 @@ app.get("/api/validateconfig", (req, res, next) => {
 
     var { exec } = require('child_process');
     
-    exec('validate.sh', (error, stdout, stderr) => {
+    exec('./validate.sh', (error, stdout, stderr) => {
     //exec('./validate.sh', (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error}`);
