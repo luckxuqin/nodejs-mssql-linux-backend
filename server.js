@@ -130,12 +130,12 @@ app.get("/api/validateconfig", (req, res, next) => {
     //exec('./validate.sh', (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error}`);
-            res.status(400).json({"error": error});
+            res.status(200).json({"error": error});
             return;
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`);
-            res.status(400).json({"stderr": stderr});
+            res.status(200).json({"stderr": stderr});
             return;
         }
         console.log(`stdout: ${stdout}`);
