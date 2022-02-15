@@ -94,14 +94,27 @@ app.post("/api/saveconfig", (req, res, next) => {
         "    system_create_account_username: vmware" + "\n" +
         "    system_create_account_password: vmware" + "\n"
 
+    const errors = [];
+    let onflightCalls = 2;
+    const responseFunc = function() {
+        if (!onflightCalls) {
+            if (errors.length) {
+                res.status(400).json(errors);
+            } else {
+                res.status(200).json({status: "success"});
+            }
+        }
+    };
     writeFile('terraform-mssql.tfvars', tfvars, function (err) {
-        if (err) return console.log(err)
-        console.log('terraform-mssql.tfvars is written')
+        onflightCalls--;
+        if (err) errors.push(err);
+        responseFunc();
     })
 
     writeFile('settings-mssql.yml', sqlvars, function (err) {
-        if (err) return console.log(err)
-        console.log('settings-mssql.yml is written')
+        onflightCalls--;
+        if (err) errors.push(err);
+        responseFunc();
     })
 })
 
@@ -111,14 +124,17 @@ app.get("/api/validateconfig", (req, res, next) => {
     var { exec } = require('child_process');
     exec('./validate.sh', (error, stdout, stderr) => {
         if (error) {
-            console.log(`error: ${error.message}`);
+            console.log(`error: ${error}`);
+            res.status(400).json({"error": error});
             return;
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`);
+            res.status(400).json({"stderr": stderr});
             return;
         }
         console.log(`stdout: ${stdout}`);
+        res.status(200).json({"stdout": stdout});
     });
 
     console.log("complete");
