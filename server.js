@@ -105,13 +105,16 @@ app.post("/api/saveconfig", (req, res, next) => {
             }
         }
     };
-    writeFile('terraform-mssql.tfvars', tfvars, function (err) {
+    
+    writeFile('/opt/automation/automation-mssql-linux/config/terraform-mssql.tfvars', tfvars, function (err) {
+    //writeFile('terraform-mssql.tfvars', tfvars, function (err) {
         onflightCalls--;
         if (err) errors.push(err);
         responseFunc();
     })
 
-    writeFile('settings-mssql.yml', sqlvars, function (err) {
+    writeFile('/opt/automation/automation-mssql-linux/config/settings-mssql.yml', sqlvars, function (err) {
+    //writeFile('settings-mssql.yml', sqlvars, function (err) {
         onflightCalls--;
         if (err) errors.push(err);
         responseFunc();
@@ -122,7 +125,9 @@ app.get("/api/validateconfig", (req, res, next) => {
     console.log("valiate config file");
 
     var { exec } = require('child_process');
-    exec('./validate.sh', (error, stdout, stderr) => {
+    
+    exec('/opt/automation/automation-mssql-linux/validate.sh', (error, stdout, stderr) => {
+    //exec('./validate.sh', (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error}`);
             res.status(400).json({"error": error});
