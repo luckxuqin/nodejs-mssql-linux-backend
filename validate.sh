@@ -1,2 +1,3 @@
 #! /bin/bash
-echo "exec validate.sh"
+cd /opt/automation/automation-mssql-linux
+./validate.sh
