@@ -65,8 +65,8 @@ app.post("/api/saveconfig", (req, res, next) => {
         "vsphere_network_1_ipv4_gateway = \"" + req.body.subnetGateway + "\"\n" +
         "vsphere_datastore = \"" + req.body.dstoreName + "\"\n" +
         "network_domain_name = \"" + req.body.domainName + "\"\n" +
-        "network_ipv4_dns_servers = \"" + req.body.dnsSuffix + "\"\n" +
-        "network_dns_suffix = [" + req.body.dnsName.split(/[ ,]+/).map(s => `"${s}"`).join(',') + "]\n" +
+        "network_dns_suffix = \"" + req.body.dnsSuffix + "\"\n" +
+        "network_ipv4_dns_servers = [" + req.body.dnsName.split(/[ ,]+/).map(s => `"${s}"`).join(',') + "]\n" +
         "vm_mssql_count = " + req.body.sqlVMCount + "\n" +
         "vm_mssql = { \n" +
         "    cpu = " + req.body.sqlVMCPU + "\n" +
@@ -127,7 +127,6 @@ app.get("/api/validateconfig", (req, res, next) => {
     var { exec } = require('child_process');
     
     exec('./validate.sh', (error, stdout, stderr) => {
-    //exec('./validate.sh', (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error}`);
             res.status(200).json({"error": error});
