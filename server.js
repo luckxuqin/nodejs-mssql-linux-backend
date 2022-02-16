@@ -129,12 +129,12 @@ app.get("/api/validateconfig", (req, res, next) => {
     exec('./validate.sh', (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error}`);
-            res.status(200).json({"error": error});
+            res.status(200).json({"error": error.message.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
             return;
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`);
-            res.status(200).json({"stderr": stderr});
+            res.status(200).json({"stderr": stderr.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
             return;
         }
         console.log(`stdout: ${stdout}`);
