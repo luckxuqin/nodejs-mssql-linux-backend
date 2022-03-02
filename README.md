@@ -21,6 +21,7 @@ CentOS 9
     success
 
 * Download the code to /opt/automation folder and run the following code to start the web console
+
     [root@testbench nodejs-mssql-linux-backend]# node server.js
 
 * Open browser and point to the following URL: `http://<testbench IP Address>:8000`

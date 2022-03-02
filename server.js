@@ -89,8 +89,8 @@ app.post("/api/saveconfig", (req, res, next) => {
         "    system_selinux_disable: " + req.body.selinuxDisable + "\n" +
         "    system_extend_os_lvm: " + req.body.extendOsLvm + "\n" +
         "    system_mount_data_disks: " + req.body.mountDatadisk + "\n" +
-        "    system_data_disks_filesystem: \'" + req.body.dataDiskFilesystem + "\'\n" +
-        "    system_data_disk_mount_paths: ['/sqlnux']" + "\n" +
+        "    system_mount_data_disks_filesystem: \'" + req.body.dataDiskFilesystem + "\'\n" +
+        "    system_mount_data_disk_mount_paths: ['/sqlnux/data','/sqlnux/log']" + "\n" +
         "    system_create_account: true" + "\n" +
         "    system_create_account_username: vmware" + "\n" +
         "    system_create_account_password: vmware" + "\n"
