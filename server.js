@@ -73,6 +73,7 @@ app.post("/api/saveconfig", (req, res, next) => {
         "    memory_gb = " + req.body.sqlVMMemory + "\n" +
         "    os_disk_gb = " + req.body.sqlVMOSDisk + "\n" +
         "    data_disk_gb = " + req.body.sqlVMDataDisk + "\n" +
+        "    log_disk_gb = " + req.body.sqlVMLogDisk + "\n" +
         "}"
 
     var sqlvars = 
