@@ -141,8 +141,6 @@ app.get("/api/validateconfig", (req, res, next) => {
         console.log(`stdout: ${stdout}`);
         res.status(200).json({"stdout": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
     });
-
-    console.log("complete");
 })
 
 app.get("/api/startdeployment", (req, res, next) => {
@@ -153,19 +151,17 @@ app.get("/api/startdeployment", (req, res, next) => {
     exec('./deploy.sh', (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error}`);
-            res.status(200).json({"error": error.message.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
+            res.status(200).json({"error": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
             return;
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`);
-            res.status(200).json({"stderr": stderr.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
+            res.status(200).json({"stderr": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
             return;
         }
         console.log(`stdout: ${stdout}`);
         res.status(200).json({"stdout": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
     });
-
-    console.log("complete");
 })
 
 app.get("/api/destroyvms", (req, res, next) => {
