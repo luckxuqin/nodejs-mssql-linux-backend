@@ -47,8 +47,8 @@ app.get("/api/user/:id", (req, res, next) => {
 });
 
 app.post("/api/saveconfig", (req, res, next) => {
-    console.log("-------")
-    console.log(req.body)
+    //console.log("-------")
+    //console.log(req.body)
     
     var tfvars = "vcenter_server = \"" + req.body.vcenterIp + "\"\n" +
         "vcenter_user = \"" + req.body.vcenterUsername + "\"\n" +
@@ -183,8 +183,6 @@ app.get("/api/destroyvms", (req, res, next) => {
         console.log(`stdout: ${stdout}`);
         res.status(200).json({"stdout": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
     });
-
-    console.log("complete");
 })
 
 app.post("/api/user/", (req, res, next) => {
