@@ -65,8 +65,9 @@ app.post("/api/saveconfig", (req, res, next) => {
         "vsphere_network_1_ipv4_gateway = \"" + req.body.subnetGateway + "\"\n" +
         "vsphere_datastore = \"" + req.body.dstoreName + "\"\n" +
         "network_domain_name = \"" + req.body.domainName + "\"\n" +
-        "network_dns_suffix = [" + req.body.dnsSuffix + "]\n" +
+        "network_dns_suffix = [" + req.body.dnsSuffix.split(/[ ,]+/).map(s => `"${s}"`).join(',') + "]\n" +
         "network_ipv4_dns_servers = [" + req.body.dnsName.split(/[ ,]+/).map(s => `"${s}"`).join(',') + "]\n" +
+        "vm_mssql_prefix = \"" + req.body.sqlVMPrefix + "\"\n" +
         "vm_mssql_count = " + req.body.sqlVMCount + "\n" +
         "vm_mssql = { \n" +
         "    cpu = " + req.body.sqlVMCPU + "\n" +
@@ -89,11 +90,17 @@ app.post("/api/saveconfig", (req, res, next) => {
         "    system_selinux_disable: " + req.body.selinuxDisable + "\n" +
         "    system_extend_os_lvm: " + req.body.extendOsLvm + "\n" +
         "    system_mount_data_disks: " + req.body.mountDatadisk + "\n" +
-        "    system_mount_data_disks_filesystem: \'" + req.body.dataDiskFilesystem + "\'\n" +
-        "    system_mount_data_disk_mount_paths: ['/sqlnux/data','/sqlnux/log']" + "\n" +
-        "    system_create_account: true" + "\n" +
-        "    system_create_account_username: vmware" + "\n" +
-        "    system_create_account_password: vmware" + "\n"
+        "    system_mount_data_disks_filesystem: " + req.body.dataDiskFilesystem + "\n" +
+        "    system_mount_data_disk_mount_paths: [" + req.body.dataDiskMountPath.split(/[ ,]+/).map(s => `'${s}'`).join(',') + "]\n" +
+        "    system_mount_data_disks_filesystem: " + req.body.systemCreateAccountUsername + "\n" +
+        "    system_mount_data_disks_filesystem: " + req.body.systemCreateAccountPassword + "\n" +    
+        "    system_mount_data_disks_filesystem: " + req.body.systemCreateAccountKeyFile + "\n" +
+        "    system_mount_data_disks_filesystem: " + req.body.mssqlSaPassword + "\n" +    
+        "    system_mount_data_disks_filesystem: " + req.body.mssqlInstallUsername + "\n" +
+        "    system_mount_data_disks_filesystem: " + req.body.mssqlInstallPassword + "\n" +    
+        "    system_mount_data_disks_filesystem: " + req.body.mssqlHaclusterPassword + "\n" +
+        "    system_mount_data_disks_filesystem: " + req.body.mssqlPacemakerUsername + "\n" +    
+        "    system_mount_data_disks_filesystem: " + req.body.mssqlPacemakerPassword + "\n"  
 
     const errors = [];
     let onflightCalls = 2;
