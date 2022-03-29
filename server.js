@@ -92,15 +92,35 @@ app.post("/api/saveconfig", (req, res, next) => {
         "    system_mount_data_disks: " + req.body.mountDatadisk + "\n" +
         "    system_mount_data_disks_filesystem: " + req.body.dataDiskFilesystem + "\n" +
         "    system_mount_data_disk_mount_paths: [" + req.body.dataDiskMountPath.split(/[ ,]+/).map(s => `'${s}'`).join(',') + "]\n" +
-        "    system_mount_data_disks_filesystem: " + req.body.systemCreateAccountUsername + "\n" +
-        "    system_mount_data_disks_filesystem: " + req.body.systemCreateAccountPassword + "\n" +    
-        "    system_mount_data_disks_filesystem: " + req.body.systemCreateAccountKeyFile + "\n" +
-        "    system_mount_data_disks_filesystem: " + req.body.mssqlSaPassword + "\n" +    
-        "    system_mount_data_disks_filesystem: " + req.body.mssqlInstallUsername + "\n" +
-        "    system_mount_data_disks_filesystem: " + req.body.mssqlInstallPassword + "\n" +    
-        "    system_mount_data_disks_filesystem: " + req.body.mssqlHaclusterPassword + "\n" +
-        "    system_mount_data_disks_filesystem: " + req.body.mssqlPacemakerUsername + "\n" +    
-        "    system_mount_data_disks_filesystem: " + req.body.mssqlPacemakerPassword + "\n"  
+        "    system_create_account: " + req.body.systemCreateAccount + "\n" +   
+        "    system_create_account_username: " + req.body.systemCreateAccountUsername + "\n" +
+        "    system_create_account_password: " + req.body.systemCreateAccountPassword + "\n" +    
+        "    system_create_account_key_file: " + req.body.systemCreateAccountKeyFile + "\n" +
+        "    mssql_sa_password: " + req.body.mssqlSaPassword + "\n" +    
+        "    mssql_install_user_username: " + req.body.mssqlInstallUsername + "\n" +
+        "    mssql_install_user_password: " + req.body.mssqlInstallPassword + "\n" +    
+        "    mssql_hacluster_password: " + req.body.mssqlHaclusterPassword + "\n" +
+        "    mssql_pacemaker_username: " + req.body.mssqlPacemakerUsername + "\n" +    
+        "    mssql_pacemaker_password: " + req.body.mssqlPacemakerPassword + "\n" +
+        "    mssql_install_agent: " + req.body.mssqlInstallAgent + "\n" +
+        "    mssql_install_ha: " + req.body.mssqlInstallHA + "\n" +    
+        "    mssql_install_fulltext: " + req.body.mssqlInstallFullText + "\n" +
+        "    mssql_install_intg_svc: " + req.body.mssqlInstallIvtgSvc + "\n" +    
+        "    mssql_port: " + req.body.mssqlPort + "\n" +
+        "    mssql_trace_flags: [" + req.body.mssqlTraceFlags.split(/[ ,]+/).map(s => `'${s}'`).join(',') + "]\n" +       
+        "    mssql_telemetry_customer_feedback: " + req.body.mssqlCustomerFeedback + "\n" +
+        "    mssql_install_agent_enable: " + req.body.mssqlAgent + "\n" +    
+        "    mssql_agent_logging_level: " + req.body.mssqlAgentLoggingLevel + "\n" +
+        "    mssql_coredump_type: " + req.body.mssqlCoreDumpType + "\n" +    
+        "    mssql_directory_data: " + req.body.mssqlDataDir + "\n" +
+        "    mssql_directory_log: " + req.body.mssqlLogDir + "\n" +
+        "    mssql_directory_backup: " + req.body.mssqlBackupDir + "\n" +    
+        "    mssql_directory_dump: " + req.body.mssqlDumpDir + "\n" +
+        "    mssql_directory_audit: " + req.body.mssqlAuditDir + "\n" +    
+        "    mssql_directory_errorlogs: " + req.body.mssqlErrorLogDir + "\n" +
+        "    mssql_directory_cert: " + req.body.mssqlCertDir + "\n" +
+        "    mssql_error_log_filename: " + req.body.mssqlErrorLogFilename + "\n" +    
+        "    mssql_install_agent_error_log_file: " + req.body.mssqlAgentErrorDir + "\n"
 
     const errors = [];
     let onflightCalls = 2;
