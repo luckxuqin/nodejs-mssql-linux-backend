@@ -58,7 +58,7 @@ app.post("/api/saveconfig", (req, res, next) => {
         "vsphere_compute_cluster = \"" + req.body.clusterName + "\"\n" +
         "vsphere_folder_vm = \"" + req.body.fdName + "\"\n" +
         "vsphere_resource_pool = \"" + req.body.rpName + "\"\n" +
-        "vsphere_distributed_switch = \"" + req.body.dswitchName + "\"\n" +
+//        "vsphere_distributed_switch = \"" + req.body.dswitchName + "\"\n" +
         "vsphere_network_1_portgroup = \"" + req.body.portGroupName + "\"\n" +
         "vsphere_network_1_ipv4_subnet_cidr = \"" + req.body.subnetCIDR + "\"\n" +
         "vsphere_network_1_ipv4_ips = [" + req.body.subnetIps.split(/[ ,]+/).map(s => `"${s}"`).join(',') + "]\n" +
