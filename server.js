@@ -83,7 +83,7 @@ app.post("/api/saveconfig", (req, res, next) => {
         "    mssql_pid: '" + req.body.sqlPID + "'\n" +
         "    mssql_accept_eula: " + req.body.mssqlAcceptEULA + "\n" +
         "    mssql_pcs_cluster_vip_cidr: \'" + req.body.pcsVIPCIDR + "\'\n" +
-        "    mssql_ag_name: " + req.body.agname + "n" +
+        "    mssql_ag_name: " + req.body.agname + "\n" +
         "    mssql_ag_db_name: " + req.body.agDbname + "\n" +
         "    mssql_ag_endpoint: " + req.body.agEndpoint + "\n" +
         "    mssql_pcs_cluster_name: " + req.body.pcsClusterName + "\n" +
