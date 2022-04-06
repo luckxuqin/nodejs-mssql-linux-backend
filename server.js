@@ -177,6 +177,13 @@ app.get("/api/validateconfig", (req, res, next) => {
     });
 })
 
+app.post("/api/downloadvalidateresult", (req, res, next) => {
+    var text = 'Hello world!'
+    res.attachment('filename.txt')
+    res.type('txt')
+    res.send(text)
+})
+
 app.get("/api/startdeployment", (req, res, next) => {
     console.log("Start Deployment");
 
