@@ -10,7 +10,9 @@ app.use(bodyParser.json());
 
 var HTTP_PORT = 8000
 
-var validateresult = ''
+var validateResult
+var deployResult
+var destroyResult
 
 // Start server
 app.listen(HTTP_PORT, () => {
@@ -164,32 +166,24 @@ app.get("/api/validateconfig", (req, res, next) => {
     var { exec } = require('child_process');
     
     exec('./validate.sh', (error, stdout, stderr) => {
-        validateresult = '';
+        validateResult = '';
 
         if (error) {
-            console.log(`error: ${error}`);
-            res.status(200).json({"error": error.message.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
+            //console.log(`error: ${error}`);
+            validateResult = stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '');
+            res.status(200).json({"error": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
             return;
         }
         if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            validateresult = stderr;
-            res.status(200).json({"stderr": stderr.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
+            //console.log(`stderr: ${stderr}`);
+            validateResult = stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '');
+            res.status(200).json({"stderr": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
             return;
         }
-        console.log(`stdout: ${stdout}`);
-        validateresult = stdout;
+        //console.log(`stdout: ${stdout}`);
+        validateResult = stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '');
         res.status(200).json({"stdout": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
     });
-})
-
-app.get("/api/downloadvalidateresult", (req, res, next) => {
-
-    res.setHeader('Content-type', "application/octet-stream");
-    
-    res.setHeader('Content-disposition', 'attachment; filename=test.txt');
-    
-    res.send(validateresult);
 })
 
 app.get("/api/startdeployment", (req, res, next) => {
@@ -198,17 +192,22 @@ app.get("/api/startdeployment", (req, res, next) => {
     var { exec } = require('child_process');
     
     exec('./deploy.sh', (error, stdout, stderr) => {
+        deployResult = '';
+
         if (error) {
-            console.log(`error: ${error}`);
+            //console.log(`error: ${error}`);
+            deployResult = stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')
             res.status(200).json({"error": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
             return;
         }
         if (stderr) {
-            console.log(`stderr: ${stderr}`);
+            //console.log(`stderr: ${stderr}`);
+            deployResult = stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')
             res.status(200).json({"stderr": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
             return;
         }
-        console.log(`stdout: ${stdout}`);
+        //console.log(`stdout: ${stdout}`);
+        deployResult = stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')
         res.status(200).json({"stdout": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
     });
 })
@@ -219,19 +218,42 @@ app.get("/api/destroyvms", (req, res, next) => {
     var { exec } = require('child_process');
     
     exec('./destroy.sh', (error, stdout, stderr) => {
+        destroyResult = '';
+
         if (error) {
-            console.log(`error: ${error}`);
-            res.status(200).json({"error": error.message.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
+            //console.log(`error: ${error}`);
+            destroyResult = stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')
+            res.status(200).json({"error": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
             return;
         }
         if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            res.status(200).json({"stderr": stderr.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
+            //console.log(`stderr: ${stderr}`);
+            destroyResult = stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')
+            res.status(200).json({"stderr": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
             return;
         }
-        console.log(`stdout: ${stdout}`);
+        //console.log(`stdout: ${stdout}`);
+        destroyResult = stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')
         res.status(200).json({"stdout": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
     });
+})
+
+app.get("/api/downloadvalidateresult", (req, res, next) => {
+    res.setHeader('Content-type', "application/octet-stream");
+    res.setHeader('Content-disposition', 'attachment; filename=validateLog.txt');
+    res.send(validateresult);
+})
+
+app.get("/api/downloaddeployresult", (req, res, next) => {
+    res.setHeader('Content-type', "application/octet-stream");
+    res.setHeader('Content-disposition', 'attachment; filename=deployLog.txt');
+    res.send(deployResult);
+})
+
+app.get("/api/downloaddestroyresult", (req, res, next) => {
+    res.setHeader('Content-type', "application/octet-stream");
+    res.setHeader('Content-disposition', 'attachment; filename=destroyLog.txt');
+    res.send(destroyResult);
 })
 
 app.post("/api/user/", (req, res, next) => {
