@@ -10,6 +10,8 @@ app.use(bodyParser.json());
 
 var HTTP_PORT = 8000
 
+var validateresult = ''
+
 // Start server
 app.listen(HTTP_PORT, () => {
     console.log("Server running on port %PORT%".replace("%PORT%",HTTP_PORT))
@@ -162,6 +164,8 @@ app.get("/api/validateconfig", (req, res, next) => {
     var { exec } = require('child_process');
     
     exec('./validate.sh', (error, stdout, stderr) => {
+        validateresult = '';
+
         if (error) {
             console.log(`error: ${error}`);
             res.status(200).json({"error": error.message.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
@@ -169,19 +173,23 @@ app.get("/api/validateconfig", (req, res, next) => {
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`);
+            validateresult = stderr;
             res.status(200).json({"stderr": stderr.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
             return;
         }
         console.log(`stdout: ${stdout}`);
+        validateresult = stdout;
         res.status(200).json({"stdout": stdout.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '')});
     });
 })
 
-app.post("/api/downloadvalidateresult", (req, res, next) => {
-    var text = 'Hello world!'
-    res.attachment('filename.txt')
-    res.type('txt')
-    res.send(text)
+app.get("/api/downloadvalidateresult", (req, res, next) => {
+
+    res.setHeader('Content-type', "application/octet-stream");
+    
+    res.setHeader('Content-disposition', 'attachment; filename=test.txt');
+    
+    res.send(validateresult);
 })
 
 app.get("/api/startdeployment", (req, res, next) => {
