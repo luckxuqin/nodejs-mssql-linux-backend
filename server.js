@@ -241,7 +241,7 @@ app.get("/api/destroyvms", (req, res, next) => {
 app.get("/api/downloadvalidateresult", (req, res, next) => {
     res.setHeader('Content-type', "application/octet-stream");
     res.setHeader('Content-disposition', 'attachment; filename=validateLog.txt');
-    res.send(validateresult);
+    res.send(validateResult);
 })
 
 app.get("/api/downloaddeployresult", (req, res, next) => {
