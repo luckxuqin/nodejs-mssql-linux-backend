@@ -58,6 +58,7 @@ app.post("/api/saveconfig", (req, res, next) => {
         "vcenter_user = \"" + req.body.vcenterUsername + "\"\n" +
         "vcenter_password = \"" + req.body.vcenterPwd + "\"\n" +
         "vcenter_insecure_ssl = " + req.body.insecureSSL + "\n" +
+        "vm_mssql_anti_affinity = " + req.body.antiAffinity + "\n" +
         "vsphere_datacenter = \"" + req.body.dcenterName + "\"\n" +
         "vsphere_compute_cluster = \"" + req.body.clusterName + "\"\n" +
         "vsphere_folder_vm = \"" + req.body.fdName + "\"\n" +
